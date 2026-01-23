@@ -1230,45 +1230,6 @@ Chore: Maintenance tasks
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2025 Akshat Srivastava
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
-
----
-
-## 🧑‍💻 Author
-
-<div align="center">
-  <img src="https://via.placeholder.com/150/FF69B4/FFFFFF?text=AS" alt="Author Avatar" width="100" style="border-radius: 50%;">
-  
-  <h3>Akshat Srivastava</h3>
-  
-  <p>Full Stack Developer | MERN Stack Enthusiast</p>
-  
-  [![GitHub](https://img.shields.io/badge/GitHub-Akshatsrii-FF69B4?style=for-the-badge&logo=github)](https://github.com/Akshatsrii)
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-FF1493?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/akshatsrivastava)
-  [![Portfolio](https://img.shields.io/badge/Portfolio-Visit-FFB6C1?style=for-the-badge&logo=google-chrome)](https://akshatsrivastava.dev)
-  [![Email](https://img.shields.io/badge/Email-Contact-FF69B4?style=for-the-badge&logo=gmail)](mailto:akshat@example.com)
-</div>
-
----
-
 ## 🙏 Acknowledgments
 
 - [TMDB](https://www.themoviedb.org/) for movie data API
@@ -1279,47 +1240,7 @@ copies or substantial portions of the Software.
 
 ---
 
-## 📊 Project Stats
 
-<div align="center">
-
-![GitHub stars](https://img.shields.io/github/stars/Akshatsrii/Movie-Ticket-Website?style=social)
-![GitHub forks](https://img.shields.io/github/forks/Akshatsrii/Movie-Ticket-Website?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/Akshatsrii/Movie-Ticket-Website?style=social)
-![GitHub issues](https://img.shields.io/github/issues/Akshatsrii/Movie-Ticket-Website?color=FF69B4)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/Akshatsrii/Movie-Ticket-Website?color=FF1493)
-![GitHub last commit](https://img.shields.io/github/last-commit/Akshatsrii/Movie-Ticket-Website?color=FFB6C1)
-
-</div>
-
----
-
-## 🗺️ Roadmap
-
-- [x] User authentication and authorization
-- [x] Movie browsing and search
-- [x] Seat selection and booking
-- [x] Payment integration
-- [x] Email notifications
-- [ ] Mobile app (React Native)
-- [ ] Push notifications
-- [ ] Social media login (Facebook, Twitter)
-- [ ] Review and rating system
-- [ ] Recommendation engine (AI/ML)
-- [ ] Multi-language support
-- [ ] Dark mode
-- [ ] PWA support
-- [ ] Voice search
-
----
-
-## 💬 Support
-
-For support, email akshat@example.com or join our Slack channel.
-
-<div align="center">
-  <p>If you find this project helpful, please consider giving it a ⭐</p>
-  
   <p>Made with ❤️ and lots of ☕</p>
 </div>
 
