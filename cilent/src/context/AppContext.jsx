@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useUser, useAuth } from "@clerk/clerk-react"; // Clerk hooks
 
 // ✅ Load base URL from .env
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export const AppContext = createContext();
 
@@ -22,7 +22,7 @@ export const AppProvider = ({ children }) => {
   // ✅ Environment variables
   const currency = import.meta.env.VITE_CURRENCY;
   const imageBaseUrl = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const baseUrl = import.meta.env.VITE_BASE_URL || import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
   // ✅ Fetch user admin status from backend dynamically using Clerk token
   const fetchIsAdmin = async () => {
