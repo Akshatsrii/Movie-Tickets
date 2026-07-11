@@ -23,13 +23,13 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div className="h-[calc(100vh-64px)] md:flex flex-col items-center pt-8 max-w-13 md:max-w-60 w-full border-r border-gray-300/20 text-sm">
+    <div className="h-[calc(100vh-64px)] md:flex flex-col items-center pt-8 max-w-13 md:max-w-60 w-full bg-white border-r border-zinc-200/60 text-sm">
       <img
-        className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto"
+        className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto shadow-sm"
         src={user.imageUrl}
         alt="sidebar"
       />
-      <p className="mt-2 text-base max-md:hidden">
+      <p className="mt-2.5 text-base font-bold text-zinc-850 max-md:hidden">
         {user.firstName} {user.lastName}
       </p>
 
@@ -40,8 +40,8 @@ const AdminSidebar = () => {
             to={link.path}
             end={link.exact} // ✅ This makes /admin match only exactly, not subpaths
             className={({ isActive }) =>
-              `relative flex items-center max-md:justify-center gap-2 w-full py-2.5 min-md:pl-10 first:mt-6 text-gray-400 transition-colors duration-200 ${
-                isActive ? 'bg-primary/15 text-primary group' : ''
+              `relative flex items-center max-md:justify-center gap-2.5 w-full py-3.5 min-md:pl-10 first:mt-6 text-zinc-500 hover:text-zinc-800 transition-colors duration-200 ${
+                isActive ? 'bg-[#e51e25]/10 text-[#e51e25] font-bold group' : 'hover:bg-zinc-50/50'
               }`
             }
           >
@@ -50,8 +50,8 @@ const AdminSidebar = () => {
                 <link.icon className="w-5 h-5" />
                 <p className="max-md:hidden">{link.name}</p>
                 <span
-                  className={`w-1.5 h-10 rounded-l right-0 absolute transition-all duration-200 ${
-                    isActive ? 'bg-primary' : 'bg-transparent'
+                  className={`w-1 h-8 rounded-l right-0 absolute transition-all duration-200 ${
+                    isActive ? 'bg-[#e51e25]' : 'bg-transparent'
                   }`}
                 />
               </>

@@ -24,33 +24,33 @@ const MovieCard = ({ movie, isSelected, onClick }) => {
   return (
     <div 
       onClick={onClick}
-      className={`relative flex-shrink-0 w-44 cursor-pointer transition-all duration-300 rounded-xl overflow-hidden shadow-lg bg-black/30 backdrop-blur-md
-      ${isSelected ? 'ring-4 ring-red-500 scale-105 shadow-2xl shadow-red-500/50' : 'hover:scale-105 hover:ring-2 hover:ring-red-400'}`}
+      className={`relative flex-shrink-0 w-44 cursor-pointer transition-all duration-300 rounded-xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.03)] bg-white border border-zinc-200/80
+      ${isSelected ? 'ring-4 ring-[#e51e25] scale-102 shadow-lg shadow-red-500/20' : 'hover:scale-102 hover:border-[#e51e25]/50'}`}
     >
       <img 
         src={movie.poster_path} 
         alt={movie.title}
-        className="w-full h-64 object-cover brightness-90"
+        className="w-full h-64 object-cover"
         onError={(e) => {
-          e.target.src = '/api/placeholder/300/400';
+          e.target.src = 'https://via.placeholder.com/300x400?text=No+Image';
         }}
       />
       
       {/* Rating Badge */}
-      <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1">
+      <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1">
         <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
         <span className="text-white font-bold text-xs">{movie.vote_average.toFixed(1)}</span>
       </div>
 
       {/* Movie Info */}
-      <div className="absolute bottom-0 bg-gradient-to-t from-black via-black/90 to-transparent w-full p-3">
-        <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2">{movie.title}</h3>
-        <p className="text-gray-400 text-xs">{movie.vote_count} votes</p>
+      <div className="p-3 bg-white border-t border-zinc-100">
+        <h3 className="text-zinc-950 font-bold text-xs truncate mb-0.5">{movie.title}</h3>
+        <p className="text-zinc-400 text-xxs font-medium">{movie.vote_count} votes</p>
       </div>
 
       {/* Hover Overlay */}
-      <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-        <div className="bg-red-600 px-4 py-2 rounded-full font-semibold text-sm transform scale-90 hover:scale-100 transition-transform">
+      <div className="absolute inset-0 bg-[#e51e25]/10 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+        <div className="bg-[#e51e25] text-white px-3 py-1.5 rounded-full font-bold text-xxs shadow-sm">
           Select Movie
         </div>
       </div>
@@ -60,7 +60,7 @@ const MovieCard = ({ movie, isSelected, onClick }) => {
 
 // Main Component
 export default function AddShows() {
-  const currency = import.meta.env.VITE_CURRENCY || "$";
+  const currency = import.meta.env.VITE_CURRENCY || "₹";
   
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -99,31 +99,32 @@ export default function AddShows() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden relative">
-      {/* Blur Circles at all corners */}
+    <div className="relative min-h-screen bg-transparent text-zinc-900 overflow-hidden">
+      {/* Blur Circles */}
       <BlurCircle position="top-left" />
       <BlurCircle position="top-right" />
       <BlurCircle position="bottom-left" />
       <BlurCircle position="bottom-right" />
 
       {/* Content Container */}
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 p-4 md:p-8">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-2">
-            Add <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">Shows</span>
+        <div className="mb-10">
+          <h1 className="text-4xl font-extrabold mb-1 select-none text-zinc-950">
+            Add <span className="text-[#e51e25]">Shows</span>
           </h1>
+          <p className="text-zinc-400 font-medium text-sm">Add show schedules for movie screenings</p>
         </div>
 
         {/* Now Playing Section */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-            <div className="w-1.5 h-8 bg-gradient-to-b from-red-500 to-red-700 rounded-full" />
+        <div className="mb-10">
+          <h2 className="text-xl font-extrabold text-zinc-900 mb-6 flex items-center gap-2">
+            <div className="w-1.5 h-6 bg-[#e51e25] rounded-full" />
             Now Playing Movies
           </h2>
           
           <div className="overflow-x-auto pb-4 scrollbar-hide">
-            <div className="flex gap-6 w-max">
+            <div className="flex gap-6 w-max px-1">
               {nowPlayingMovies.map((movie, index) => (
                 <MovieCard 
                   key={movie.id}
@@ -138,23 +139,23 @@ export default function AddShows() {
 
         {/* Booking Section - Only shown when movie is selected */}
         {selectedMovie && (
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/50 backdrop-blur-xl rounded-3xl p-8 border border-red-900/50 shadow-2xl shadow-red-900/30">
-            <div className="flex items-center gap-3 mb-6">
-              <Calendar className="w-8 h-8 text-red-500" />
-              <h2 className="text-3xl font-bold">{selectedMovie.title}</h2>
+          <div className="bg-white border border-zinc-200/80 rounded-3xl p-6 md:p-8 shadow-[0_10px_35px_rgba(0,0,0,0.03)] transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <Calendar className="w-6 h-6 text-[#e51e25]" />
+              <h2 className="text-2xl font-extrabold text-zinc-900">{selectedMovie.title}</h2>
             </div>
 
-            <div className="flex items-center gap-2 mb-8">
-              <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-              <span className="text-xl font-semibold">{selectedMovie.vote_average.toFixed(1)}</span>
-              <span className="text-gray-400">| {selectedMovie.vote_count} Votes</span>
+            <div className="flex items-center gap-2 mb-6 text-sm font-semibold">
+              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+              <span className="text-zinc-900 font-extrabold">{selectedMovie.vote_average.toFixed(1)}</span>
+              <span className="text-zinc-450">| {selectedMovie.vote_count} Votes</span>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               {/* Price Input */}
               <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-3 flex items-center gap-2">
-                  <DollarSign className="w-4 h-4" />
+                <label className="block text-xs font-extrabold text-zinc-500 mb-2.5 flex items-center gap-1.5 uppercase tracking-wider">
+                  <DollarSign className="w-4 h-4 text-[#e51e25]" />
                   Show Price ({currency})
                 </label>
                 <input
@@ -162,14 +163,14 @@ export default function AddShows() {
                   placeholder="Enter Price"
                   value={showPrice}
                   onChange={(e) => setShowPrice(e.target.value)}
-                  className="w-full bg-gray-800/50 border border-red-900/50 rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                  className="w-full bg-zinc-50/50 border border-zinc-200/80 rounded-xl px-4 py-3.5 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#e51e25]/40 focus:border-transparent transition-all"
                 />
               </div>
 
               {/* DateTime Input */}
               <div>
-                <label className="block text-sm font-semibold text-gray-300 mb-3 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                <label className="block text-xs font-extrabold text-zinc-500 mb-2.5 flex items-center gap-1.5 uppercase tracking-wider">
+                  <Calendar className="w-4 h-4 text-[#e51e25]" />
                   Select Date & Time
                 </label>
                 <div className="flex gap-3">
@@ -181,12 +182,12 @@ export default function AddShows() {
                     timeIntervals={30}
                     dateFormat="MMMM d, yyyy h:mm aa"
                     placeholderText="Select date and time"
-                    className="flex-1 bg-gray-800/50 border border-red-900/50 rounded-xl px-4 py-4 text-white placeholder-gray-400 focus:ring-2 focus:ring-red-500 outline-none"
+                    className="flex-1 bg-zinc-50/50 border border-zinc-200/80 rounded-xl px-4 py-3.5 text-zinc-800 placeholder-zinc-400 focus:ring-2 focus:ring-[#e51e25]/40 outline-none text-sm"
                   />
                   <button 
                     onClick={handleAddDateTime}
-                    className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg shadow-red-500/30">
-                    <Plus className="w-5 h-5" />
+                    className="bg-[#e51e25] hover:bg-[#c4161c] text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center gap-1.5 shadow-[0_4px_12px_rgba(229,30,37,0.25)] cursor-pointer text-sm">
+                    <Plus className="w-4.5 h-4.5" />
                     Add
                   </button>
                 </div>
@@ -196,20 +197,20 @@ export default function AddShows() {
             {/* Selected Date-Times */}
             {dateTimes.length > 0 && (
               <div className="mt-8">
-                <p className="text-gray-300 mb-3 font-semibold flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-red-500" />
+                <p className="text-zinc-500 mb-3 font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+                  <Clock className="w-4.5 h-4.5 text-[#e51e25]" />
                   Selected Show Timings:
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {dateTimes.map((dt, i) => (
                     <div
                       key={i}
-                      className="bg-red-900/30 border border-red-500/50 text-red-200 px-4 py-2.5 rounded-xl flex items-center gap-3 shadow-md hover:bg-red-900/40 transition-all"
+                      className="bg-zinc-50 border border-zinc-200 text-zinc-700 px-4 py-2 rounded-xl flex items-center gap-3 shadow-sm hover:border-[#e51e25]/30 transition-all"
                     >
-                      <Clock className="w-4 h-4" />
-                      <span className="text-sm font-medium">{dt}</span>
+                      <Clock className="w-4 h-4 text-[#e51e25]" />
+                      <span className="text-xs font-bold">{dt}</span>
                       <Trash2
-                        className="w-4 h-4 cursor-pointer hover:text-red-400 transition-colors ml-2"
+                        className="w-4 h-4 cursor-pointer text-zinc-400 hover:text-[#e51e25] transition-colors ml-1"
                         onClick={() => handleRemoveDateTime(dt)}
                       />
                     </div>
@@ -222,7 +223,7 @@ export default function AddShows() {
             <div className="mt-8 flex justify-end">
               <button 
                 onClick={handleAddShow}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-10 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-red-500/50">
+                className="bg-[#e51e25] hover:bg-[#c4161c] text-white px-10 py-3.5 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-103 shadow-[0_4px_14px_rgba(229,30,37,0.3)] cursor-pointer uppercase tracking-wider">
                 Add Show
               </button>
             </div>

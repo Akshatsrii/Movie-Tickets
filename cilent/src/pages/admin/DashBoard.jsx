@@ -147,80 +147,80 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden relative flex items-center justify-center">
+      <div className="min-h-screen bg-[#fffaf9] text-zinc-900 overflow-hidden relative flex items-center justify-center">
         <BlurCircle position="top-left" />
         <BlurCircle position="top-right" />
         <BlurCircle position="bottom-left" />
         <BlurCircle position="bottom-right" />
         
         <div className="relative z-10 text-center">
-          <div className="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-xl text-gray-400">Loading Dashboard...</p>
+          <div className="w-16 h-16 border-4 border-[#e51e25] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-base text-zinc-500 font-semibold">Loading Dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-zinc-900 overflow-hidden">
       {/* Blur Circles */}
       <BlurCircle position="top-left" />
       <BlurCircle position="top-right" />
       <BlurCircle position="bottom-left" />
       <BlurCircle position="bottom-right" />
 
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 p-4 md:p-8">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-2">
-            Dash<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">board</span>
+        <div className="mb-10">
+          <h1 className="text-4xl font-extrabold mb-1 select-none text-zinc-950">
+            Dash<span className="text-[#e51e25]">board</span>
           </h1>
-          <p className="text-gray-400 mt-2">Overview of your theater management</p>
+          <p className="text-zinc-400 font-medium text-sm">Overview of your theater management</p>
         </div>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 hover:shadow-md transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-red-500/20 p-3 rounded-xl">
-                <Calendar className="w-7 h-7 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-3 rounded-xl">
+                <Calendar className="w-6 h-6 text-[#e51e25]" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-400" />
+              <TrendingUp className="w-5 h-5 text-green-500" />
             </div>
-            <p className="text-gray-400 text-sm mb-1">Total Bookings</p>
-            <h3 className="text-4xl font-bold text-white">{dashboardData.totalBookings.toLocaleString()}</h3>
-            <p className="text-green-400 text-xs mt-2">+12% from last month</p>
+            <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Bookings</p>
+            <h3 className="text-3xl font-black text-zinc-900">{dashboardData.totalBookings.toLocaleString()}</h3>
+            <p className="text-green-500 text-xs font-bold mt-2">+12% from last month</p>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 hover:shadow-md transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-red-500/20 p-3 rounded-xl">
-                <DollarSign className="w-7 h-7 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-3 rounded-xl">
+                <DollarSign className="w-6 h-6 text-[#e51e25]" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-400" />
+              <TrendingUp className="w-5 h-5 text-green-500" />
             </div>
-            <p className="text-gray-400 text-sm mb-1">Total Revenue</p>
-            <h3 className="text-4xl font-bold text-white">{currency}{dashboardData.totalRevenue.toLocaleString()}</h3>
-            <p className="text-green-400 text-xs mt-2">+18% from last month</p>
+            <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Revenue</p>
+            <h3 className="text-3xl font-black text-zinc-900">{currency}{dashboardData.totalRevenue.toLocaleString()}</h3>
+            <p className="text-green-500 text-xs font-bold mt-2">+18% from last month</p>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 hover:shadow-md transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-red-500/20 p-3 rounded-xl">
-                <Users className="w-7 h-7 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-3 rounded-xl">
+                <Users className="w-6 h-6 text-[#e51e25]" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-400" />
+              <TrendingUp className="w-5 h-5 text-green-500" />
             </div>
-            <p className="text-gray-400 text-sm mb-1">Total Users</p>
-            <h3 className="text-4xl font-bold text-white">{dashboardData.totalUser.toLocaleString()}</h3>
-            <p className="text-green-400 text-xs mt-2">+8% from last month</p>
+            <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Users</p>
+            <h3 className="text-3xl font-black text-zinc-900">{dashboardData.totalUser.toLocaleString()}</h3>
+            <p className="text-green-500 text-xs font-bold mt-2">+8% from last month</p>
           </div>
         </div>
 
         {/* Active Shows Section */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-            <div className="w-1.5 h-8 bg-gradient-to-b from-red-500 to-red-700 rounded-full" />
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-zinc-900 mb-6 flex items-center gap-3">
+            <div className="w-1.5 h-6 bg-[#e51e25] rounded-full" />
             Active Shows
           </h2>
         </div>
@@ -229,46 +229,41 @@ const Dashboard = () => {
           {dashboardData.activeShows.map((show) => (
             <div
               key={show.show_id}
-              className="group relative rounded-2xl overflow-hidden bg-gray-800/30 backdrop-blur-sm border border-red-900/30 hover:border-red-500/50 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-300 cursor-pointer"
+              className="group bg-white border border-zinc-200/60 hover:border-[#e51e25]/30 rounded-2xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.02)] hover:shadow-md hover:scale-102 transition-all duration-300 cursor-pointer"
             >
               <div className="relative overflow-hidden">
                 <img
                   src={show.movie.poster_path}
                   alt={show.movie.title}
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
-                    e.target.src = '/api/placeholder/300/400';
+                    e.target.src = 'https://via.placeholder.com/300x400?text=No+Image';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 {/* Rating Badge */}
-                <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1">
+                <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1">
                   <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
                   <span className="text-white font-bold text-xs">{show.movie.vote_average.toFixed(1)}</span>
                 </div>
               </div>
 
-              <div className="p-4 bg-gradient-to-b from-gray-900/90 to-black">
-                <p className="font-semibold text-white mb-2 truncate group-hover:text-red-400 transition-colors">
+              <div className="p-4">
+                <p className="font-bold text-zinc-900 mb-2 truncate group-hover:text-[#e51e25] transition-colors">
                   {show.movie.title}
                 </p>
                 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <DollarSign className="w-4 h-4 text-red-500" />
-                    <p className="text-lg font-bold text-white">
-                      {currency} {show.showPrice}
+                  <div className="flex items-center gap-1">
+                    <p className="text-base font-extrabold text-[#e51e25]">
+                      {currency}{show.showPrice}
                     </p>
                   </div>
-                  <div className="bg-red-500/20 px-2 py-1 rounded-full">
-                    <Film className="w-3.5 h-3.5 text-red-400" />
+                  <div className="bg-[#e51e25]/10 px-2.5 py-1 rounded-full">
+                    <Film className="w-3.5 h-3.5 text-[#e51e25]" />
                   </div>
                 </div>
               </div>
-
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </div>
           ))}
         </div>

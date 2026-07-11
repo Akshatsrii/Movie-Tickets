@@ -195,80 +195,80 @@ const ListBookings = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden relative flex items-center justify-center">
+      <div className="min-h-screen bg-[#fffaf9] text-zinc-900 overflow-hidden relative flex items-center justify-center">
         <BlurCircle position="top-left" />
         <BlurCircle position="top-right" />
         <BlurCircle position="bottom-left" />
         <BlurCircle position="bottom-right" />
         
         <div className="relative z-10 text-center">
-          <div className="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-xl text-gray-400">Loading bookings...</p>
+          <div className="w-16 h-16 border-4 border-[#e51e25] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-base text-zinc-500 font-semibold">Loading bookings...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden relative">
+    <div className="relative min-h-screen bg-transparent text-zinc-900 overflow-hidden">
       <BlurCircle position="top-left" />
       <BlurCircle position="top-right" />
       <BlurCircle position="bottom-left" />
       <BlurCircle position="bottom-right" />
 
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 p-4 md:p-8">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-2">
-            List <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">Bookings</span>
+        <div className="mb-10">
+          <h1 className="text-4xl font-extrabold mb-1 select-none text-zinc-950">
+            List <span className="text-[#e51e25]">Bookings</span>
           </h1>
-          <p className="text-gray-400 mt-2">View and manage all customer bookings</p>
+          <p className="text-zinc-400 font-medium text-sm">View and manage all customer bookings</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Total Bookings</p>
-                <p className="text-3xl font-bold text-white">{stats.totalBookings}</p>
+                <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Bookings</p>
+                <p className="text-3xl font-black text-zinc-900">{stats.totalBookings}</p>
               </div>
-              <div className="bg-red-500/20 p-4 rounded-xl">
-                <Ticket className="w-8 h-8 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-4 rounded-xl">
+                <Ticket className="w-6 h-6 text-[#e51e25]" />
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Total Revenue</p>
-                <p className="text-3xl font-bold text-white">{currency} {stats.totalRevenue.toLocaleString()}</p>
+                <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Revenue</p>
+                <p className="text-3xl font-black text-zinc-900">{currency}{stats.totalRevenue.toLocaleString()}</p>
               </div>
-              <div className="bg-red-500/20 p-4 rounded-xl">
-                <TrendingUp className="w-8 h-8 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-4 rounded-xl">
+                <TrendingUp className="w-6 h-6 text-[#e51e25]" />
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Total Seats Booked</p>
-                <p className="text-3xl font-bold text-white">{stats.totalSeats}</p>
+                <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Seats Booked</p>
+                <p className="text-3xl font-black text-zinc-900">{stats.totalSeats}</p>
               </div>
-              <div className="bg-red-500/20 p-4 rounded-xl">
-                <Armchair className="w-8 h-8 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-4 rounded-xl">
+                <Armchair className="w-6 h-6 text-[#e51e25]" />
               </div>
             </div>
           </div>
         </div>
 
         {/* Bookings Table */}
-        <div className="bg-gradient-to-br from-gray-800/50 to-red-950/50 backdrop-blur-xl rounded-3xl border border-red-900/50 shadow-2xl overflow-hidden">
-          <div className="p-6 border-b border-red-900/50">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
-              <Calendar className="w-6 h-6 text-red-500" />
+        <div className="bg-white border border-zinc-200/80 rounded-3xl shadow-[0_10px_35px_rgba(0,0,0,0.02)] overflow-hidden">
+          <div className="p-6 border-b border-zinc-100 bg-white">
+            <h2 className="text-xl font-bold flex items-center gap-3 text-zinc-900">
+              <Calendar className="w-5 h-5 text-[#e51e25]" />
               All Bookings
             </h2>
           </div>
@@ -276,34 +276,34 @@ const ListBookings = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-red-900/30 border-b border-red-900/50">
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                <tr className="bg-zinc-50/50 border-b border-zinc-200/60">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
+                      <User className="w-4 h-4 text-zinc-400" />
                       User Name
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <Film className="w-4 h-4" />
+                      <Film className="w-4 h-4 text-zinc-400" />
                       Movie Name
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <Armchair className="w-4 h-4" />
+                      <Armchair className="w-4 h-4 text-zinc-400" />
                       Seats
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <DollarSign className="w-4 h-4" />
+                      <DollarSign className="w-4 h-4 text-zinc-400" />
                       Amount
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
+                      <Calendar className="w-4 h-4 text-zinc-400" />
                       Date
                     </div>
                   </th>
@@ -314,32 +314,32 @@ const ListBookings = () => {
                 {bookings.map((booking, index) => (
                   <tr
                     key={index}
-                    className="border-b border-red-900/20 hover:bg-red-900/20 transition-all"
+                    className="border-b border-zinc-150 hover:bg-zinc-50/40 transition-all"
                   >
                     <td className="p-5">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-                          <User className="w-5 h-5 text-red-400" />
+                        <div className="w-10 h-10 rounded-full bg-[#e51e25]/10 flex items-center justify-center">
+                          <User className="w-5 h-5 text-[#e51e25]" />
                         </div>
-                        <span className="font-semibold text-white">{booking.user?.name || "Unknown"}</span>
+                        <span className="font-bold text-zinc-800">{booking.user?.name || "Unknown"}</span>
                       </div>
                     </td>
-                    <td className="p-5 text-gray-300">{booking.show?.movie?.title || "N/A"}</td>
+                    <td className="p-5 text-zinc-500 font-semibold">{booking.show?.movie?.title || "N/A"}</td>
                     <td className="p-5">
                       <div className="flex flex-wrap gap-1">
                         {(booking.seats || []).map((seat, i) => (
-                          <span key={i} className="bg-red-500/20 text-red-300 px-2 py-1 rounded text-xs font-medium">
+                          <span key={i} className="bg-[#e51e25]/10 text-[#e51e25] px-2.5 py-1 rounded-md text-xs font-bold">
                             {seat}
                           </span>
                         ))}
                       </div>
                     </td>
                     <td className="p-5">
-                      <span className="text-green-400 font-bold text-lg">
-                        {currency} {booking.totalAmount?.toLocaleString() || 0}
+                      <span className="text-green-600 font-extrabold text-lg">
+                        {currency}{booking.totalAmount?.toLocaleString() || 0}
                       </span>
                     </td>
-                    <td className="p-5 text-gray-300 text-sm">{dateFormat(booking.createdAt || new Date())}</td>
+                    <td className="p-5 text-zinc-500 text-sm font-semibold">{dateFormat(booking.createdAt || new Date())}</td>
                   </tr>
                 ))}
               </tbody>

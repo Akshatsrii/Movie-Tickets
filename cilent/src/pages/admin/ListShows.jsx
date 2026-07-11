@@ -150,80 +150,80 @@ export default function ListShows() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden relative flex items-center justify-center">
+      <div className="min-h-screen bg-[#fffaf9] text-zinc-900 overflow-hidden relative flex items-center justify-center">
         <BlurCircle position="top-left" />
         <BlurCircle position="top-right" />
         <BlurCircle position="bottom-left" />
         <BlurCircle position="bottom-right" />
         
         <div className="relative z-10 text-center">
-          <div className="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-xl text-gray-400">Loading shows...</p>
+          <div className="w-16 h-16 border-4 border-[#e51e25] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-base text-zinc-500 font-semibold">Loading shows...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950 text-white overflow-hidden relative">
+    <div className="relative min-h-screen bg-transparent text-zinc-900 overflow-hidden">
       <BlurCircle position="top-left" />
       <BlurCircle position="top-right" />
       <BlurCircle position="bottom-left" />
       <BlurCircle position="bottom-right" />
 
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 p-4 md:p-8">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-2">
-            List <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">Shows</span>
+        <div className="mb-10">
+          <h1 className="text-4xl font-extrabold mb-1 select-none text-zinc-950">
+            List <span className="text-[#e51e25]">Shows</span>
           </h1>
-          <p className="text-gray-400 mt-2">Manage and monitor all your movie shows</p>
+          <p className="text-zinc-400 font-medium text-sm">Manage and monitor all your movie shows</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Total Shows</p>
-                <p className="text-3xl font-bold text-white">{stats.totalShows}</p>
+                <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Shows</p>
+                <p className="text-3xl font-black text-zinc-900">{stats.totalShows}</p>
               </div>
-              <div className="bg-red-500/20 p-4 rounded-xl">
-                <Film className="w-8 h-8 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-4 rounded-xl">
+                <Film className="w-6 h-6 text-[#e51e25]" />
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Total Bookings</p>
-                <p className="text-3xl font-bold text-white">{stats.totalBookings}</p>
+                <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Bookings</p>
+                <p className="text-3xl font-black text-zinc-900">{stats.totalBookings}</p>
               </div>
-              <div className="bg-red-500/20 p-4 rounded-xl">
-                <Users className="w-8 h-8 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-4 rounded-xl">
+                <Users className="w-6 h-6 text-[#e51e25]" />
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/50 to-red-950/30 backdrop-blur-xl rounded-2xl p-6 border border-red-900/50 shadow-xl hover:scale-105 transition-transform">
+          <div className="bg-white border border-zinc-200/80 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#e51e25]/20 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Total Earnings</p>
-                <p className="text-3xl font-bold text-white">{currency} {stats.totalEarnings.toLocaleString()}</p>
+                <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">Total Earnings</p>
+                <p className="text-3xl font-black text-zinc-900">{currency}{stats.totalEarnings.toLocaleString()}</p>
               </div>
-              <div className="bg-red-500/20 p-4 rounded-xl">
-                <TrendingUp className="w-8 h-8 text-red-500" />
+              <div className="bg-[#e51e25]/10 p-4 rounded-xl">
+                <TrendingUp className="w-6 h-6 text-[#e51e25]" />
               </div>
             </div>
           </div>
         </div>
 
         {/* Shows Table */}
-        <div className="bg-gradient-to-br from-gray-800/50 to-red-950/50 backdrop-blur-xl rounded-3xl border border-red-900/50 shadow-2xl overflow-hidden">
-          <div className="p-6 border-b border-red-900/50">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
-              <Calendar className="w-6 h-6 text-red-500" />
+        <div className="bg-white border border-zinc-200/80 rounded-3xl shadow-[0_10px_35px_rgba(0,0,0,0.02)] overflow-hidden">
+          <div className="p-6 border-b border-zinc-100 bg-white">
+            <h2 className="text-xl font-bold flex items-center gap-3 text-zinc-900">
+              <Calendar className="w-5 h-5 text-[#e51e25]" />
               All Shows
             </h2>
           </div>
@@ -231,28 +231,28 @@ export default function ListShows() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-red-900/30 border-b border-red-900/50">
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                <tr className="bg-zinc-50/50 border-b border-zinc-200/60">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <Film className="w-4 h-4" />
+                      <Film className="w-4 h-4 text-zinc-400" />
                       Movie
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
+                      <Clock className="w-4 h-4 text-zinc-400" />
                       Show Time
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
+                      <Users className="w-4 h-4 text-zinc-400" />
                       Bookings
                     </div>
                   </th>
-                  <th className="text-left p-5 font-semibold text-gray-300">
+                  <th className="text-left p-5 font-bold text-zinc-500 text-xs uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <DollarSign className="w-4 h-4" />
+                      <DollarSign className="w-4 h-4 text-zinc-400" />
                       Earnings
                     </div>
                   </th>
@@ -267,32 +267,32 @@ export default function ListShows() {
                   return (
                     <tr
                       key={index}
-                      className="border-b border-red-900/20 hover:bg-red-900/20 transition-all group"
+                      className="border-b border-zinc-150 hover:bg-zinc-50/40 transition-all group"
                     >
                       <td className="p-5">
                         <div className="flex items-center gap-4">
                           <img 
                             src={show.movie?.poster_path} 
                             alt={show.movie?.title}
-                            className="w-12 h-16 rounded-lg object-cover shadow-lg group-hover:scale-110 transition-transform"
+                            className="w-12 h-16 rounded-lg object-cover shadow-sm group-hover:scale-105 transition-transform"
                             onError={(e) => {
-                              e.target.src = '/api/placeholder/100/150';
+                              e.target.src = 'https://via.placeholder.com/100x150?text=No+Image';
                             }}
                           />
-                          <span className="font-semibold text-white">
+                          <span className="font-bold text-zinc-800 group-hover:text-[#e51e25] transition-colors">
                             {show.movie?.title || "N/A"}
                           </span>
                         </div>
                       </td>
-                      <td className="p-5 text-gray-300">{dateFormat(show.showDateTime)}</td>
+                      <td className="p-5 text-zinc-500 text-sm font-semibold">{dateFormat(show.showDateTime)}</td>
                       <td className="p-5">
-                        <span className="bg-red-500/20 text-red-300 px-4 py-2 rounded-full font-semibold">
-                          {bookings}
+                        <span className="bg-[#e51e25]/10 text-[#e51e25] px-3.5 py-1.5 rounded-full font-bold text-xs">
+                          {bookings} booked
                         </span>
                       </td>
                       <td className="p-5">
-                        <span className="text-green-400 font-bold text-lg">
-                          {currency} {earnings.toLocaleString()}
+                        <span className="text-green-600 font-extrabold text-lg">
+                          {currency}{earnings.toLocaleString()}
                         </span>
                       </td>
                     </tr>
