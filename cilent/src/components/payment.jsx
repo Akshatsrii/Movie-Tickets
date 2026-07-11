@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BlurCircle from "./BlurCircle";
-import { ArrowLeft, CreditCard, CheckCircle2, ShieldCheck, Ticket, Sparkles } from "lucide-react";
+import { ArrowLeft, CreditCard, CheckCircle2, ShieldCheck, Ticket, Sparkles, Download } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAppContext } from "../context/AppContext";
 
@@ -18,6 +18,17 @@ const Payment = () => {
   const screen = location.state?.screen || "";
   const seat = location.state?.seat || "";
   const items = location.state?.items || [];
+  const [bookingDetails, setBookingDetails] = useState(null);
+
+  useEffect(() => {
+    if (orderType === "booking" && bookingId) {
+      const localBookings = JSON.parse(localStorage.getItem("movie_bookings") || "[]");
+      const found = localBookings.find((b) => String(b._id) === String(bookingId));
+      if (found) {
+        setBookingDetails(found);
+      }
+    }
+  }, [bookingId, orderType]);
 
   // Card input states
   const [cardNumber, setCardNumber] = useState("");
@@ -333,14 +344,245 @@ const Payment = () => {
             </form>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center text-center py-6">
-            <CheckCircle2 className="text-green-500 w-16 h-16 mb-4 animate-bounce" />
-            <h3 className="text-xl font-bold mb-2 text-zinc-950">Payment Successful!</h3>
-            <p className="text-zinc-500 text-sm">
-              {orderType === "food_delivery"
-                ? "Redirecting to Live Order Tracker..."
-                : "Redirecting you to bookings..."}
-            </p>
+          <div className="flex flex-col items-center w-full">
+            {orderType === "booking" && bookingDetails ? (
+              <div className="w-full flex flex-col items-center gap-6">
+                
+                {/* Print Stylesheet */}
+                <style>{`
+                  @media print {
+                    body * {
+                      visibility: hidden;
+                    }
+                    #printable-ticket, #printable-ticket * {
+                      visibility: visible;
+                    }
+                    #printable-ticket {
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      width: 100%;
+                      border: none !important;
+                      box-shadow: none !important;
+                    }
+                    .no-print {
+                      display: none !important;
+                    }
+                  }
+                `}</style>
+
+                {/* Confirmed Indicator */}
+                <div className="flex flex-col items-center text-center no-print">
+                  <CheckCircle2 className="text-green-500 w-12 h-12 mb-2 animate-bounce" />
+                  <h3 className="text-2xl font-black text-zinc-950">Booking Confirmed!</h3>
+                  <p className="text-xs text-zinc-400 font-bold uppercase tracking-wider">Ticket generated successfully</p>
+                </div>
+
+                {/* Printable Ticket Receipt */}
+                <div id="printable-ticket" className="w-full bg-white border border-zinc-200 p-6 rounded-3xl flex flex-col items-center shadow-md">
+                  
+                  {/* Brand Header */}
+                  <div className="flex flex-col items-center text-center border-b-2 border-dashed border-zinc-200 pb-4 w-full">
+                    <span className="text-2xl font-black tracking-tight text-[#e51e25]">MOVIE DEKHO</span>
+                    <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider uppercase">Electronic Booking Receipt</span>
+                  </div>
+
+                  {/* Movie and show details */}
+                  <div className="py-5 w-full flex flex-col gap-4">
+                    <div className="flex justify-between items-start gap-4">
+                      <div>
+                        <h4 className="text-lg font-black text-zinc-900 leading-tight">{bookingDetails.show?.movie?.title}</h4>
+                        <p className="text-xs text-[#e51e25] font-bold mt-0.5">{bookingDetails.show?.movie?.genre}</p>
+                      </div>
+                      <div className="flex-shrink-0 w-12 h-16 rounded-lg overflow-hidden border border-zinc-150 shadow-sm">
+                        <img
+                          src={bookingDetails.show?.movie?.poster_path}
+                          alt="poster"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="border-t border-zinc-150 pt-3 grid grid-cols-2 gap-3 text-xs font-semibold text-zinc-600">
+                      <div>
+                        <p className="text-[10px] text-zinc-400">THEATER</p>
+                        <p className="text-zinc-800 leading-tight mt-0.5">{bookingDetails.show?.theater}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-zinc-400">SEAT NUMBERS</p>
+                        <p className="text-zinc-905 font-black leading-tight mt-0.5">{bookingDetails.bookedSeats?.join(", ")}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-zinc-400">SHOW DATE</p>
+                        <p className="text-zinc-800 leading-tight mt-0.5">
+                          {new Date(bookingDetails.show?.showDateTime).toLocaleDateString("en-US", {
+                            weekday: "short", year: "numeric", month: "short", day: "numeric"
+                          })}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-zinc-400">SHOW TIME</p>
+                        <p className="text-zinc-800 leading-tight mt-0.5">
+                          {new Date(bookingDetails.show?.showDateTime).toLocaleTimeString("en-US", {
+                            hour: "2-digit", minute: "2-digit", hour12: true
+                          })}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Food and Snacks Details */}
+                    <div className="border-t border-zinc-150 pt-3">
+                      <p className="text-[10px] text-zinc-400 font-bold mb-1">FOOD & BEVERAGES</p>
+                      {bookingDetails.snacks && bookingDetails.snacks.length > 0 ? (
+                        <div className="flex flex-wrap gap-1">
+                          {bookingDetails.snacks.map((s, idx) => (
+                            <span key={idx} className="bg-amber-500/10 border border-amber-500/20 text-zinc-800 text-[10px] font-bold px-2 py-0.5 rounded">
+                              {s.name} x{s.quantity}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-zinc-400 text-xs italic">No snacks ordered with ticket</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Dotted Tear Line */}
+                  <div className="relative w-full flex items-center justify-center my-2 border-t-2 border-dashed border-zinc-200">
+                    <div className="absolute -left-12 w-6 h-6 rounded-full bg-zinc-800/10" />
+                    <div className="absolute -right-12 w-6 h-6 rounded-full bg-zinc-800/10" />
+                  </div>
+
+                  {/* QR Checkin code */}
+                  <div className="py-4 flex flex-col items-center w-full">
+                    <img
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(
+                        window.location.origin + "/checkin/" + bookingDetails._id
+                      )}`}
+                      alt="checkin-qr"
+                      className="w-28 h-28 border border-zinc-200 p-2 bg-white rounded-xl shadow-inner"
+                    />
+                    <p className="text-[9px] text-zinc-400 mt-2 font-bold uppercase tracking-wider">
+                      Scan QR at Entry Gate to Check-In
+                    </p>
+                  </div>
+
+                  {/* Barcode representation */}
+                  <div className="w-full flex flex-col items-center border-t border-zinc-150 pt-4 mt-2">
+                    <div className="h-8 bg-[repeating-linear-gradient(90deg,black,black_2px,transparent_2px,transparent_6px)] w-48 opacity-80" />
+                    <span className="text-[10px] text-zinc-400 font-mono tracking-widest mt-1">MD-{String(bookingDetails._id).slice(-8).toUpperCase()}</span>
+                  </div>
+
+                </div>
+
+                {/* Action Buttons */}
+                <div className="w-full flex gap-3 mt-2 no-print">
+                  <button
+                    onClick={() => {
+                      toast.success("Opening print wizard...");
+                      window.print();
+                    }}
+                    className="flex-1 py-3 bg-[#e51e25] hover:bg-[#c4161c] text-white rounded-xl font-bold text-xs shadow-md hover:scale-105 transition flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <Download className="w-4 h-4" /> Download PDF / Print
+                  </button>
+                  <button
+                    onClick={() => navigate("/my-bookings")}
+                    className="flex-1 py-3 bg-zinc-900 hover:bg-black text-white rounded-xl font-bold text-xs shadow-md hover:scale-105 transition flex items-center justify-center cursor-pointer"
+                  >
+                    Go to My Bookings
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Food Delivery Standalone receipt */
+              <div className="w-full flex flex-col items-center gap-6">
+                <style>{`
+                  @media print {
+                    body * {
+                      visibility: hidden;
+                    }
+                    #printable-food-receipt, #printable-food-receipt * {
+                      visibility: visible;
+                    }
+                    #printable-food-receipt {
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      width: 100%;
+                      border: none !important;
+                      box-shadow: none !important;
+                    }
+                    .no-print {
+                      display: none !important;
+                    }
+                  }
+                `}</style>
+
+                <div className="flex flex-col items-center text-center no-print">
+                  <CheckCircle2 className="text-green-500 w-12 h-12 mb-2 animate-bounce" />
+                  <h3 className="text-2xl font-black text-zinc-950 font-bold">Order Confirmed!</h3>
+                  <p className="text-xs text-zinc-400 font-bold uppercase tracking-wider">Seat delivery request placed</p>
+                </div>
+
+                <div id="printable-food-receipt" className="w-full bg-white border border-zinc-200 p-6 rounded-3xl flex flex-col items-center shadow-md">
+                  <div className="flex flex-col items-center text-center border-b-2 border-dashed border-zinc-200 pb-4 w-full">
+                    <span className="text-2xl font-black tracking-tight text-[#e51e25]">MOVIE DEKHO</span>
+                    <span className="text-[10px] text-zinc-400 font-extrabold tracking-wider uppercase">F&B Seat Delivery Receipt</span>
+                  </div>
+
+                  <div className="py-5 w-full flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-3 text-xs font-semibold text-zinc-600">
+                      <div>
+                        <p className="text-[10px] text-zinc-400">SCREEN</p>
+                        <p className="text-zinc-900 font-bold leading-tight mt-0.5">{screen}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-zinc-400">SEAT NUMBER</p>
+                        <p className="text-zinc-900 font-black leading-tight mt-0.5">{seat}</p>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-zinc-150 pt-3">
+                      <p className="text-[10px] text-zinc-400 font-bold mb-2">ORDERED ITEMS</p>
+                      <div className="flex flex-col gap-2">
+                        {items.map((item, idx) => (
+                          <div key={idx} className="flex justify-between items-center text-xs font-semibold text-zinc-700">
+                            <span>{item.name} x{item.quantity}</span>
+                            <span>₹{item.price * item.quantity}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-zinc-150 pt-3 flex justify-between items-center text-xs font-bold text-zinc-900">
+                      <span>Total Paid</span>
+                      <span className="text-[#e51e25] text-base font-extrabold">₹{payableTotal}</span>
+                    </div>
+                  </div>
+
+                  <div className="w-full flex flex-col items-center border-t border-zinc-150 pt-4 mt-2">
+                    <div className="h-8 bg-[repeating-linear-gradient(90deg,black,black_2px,transparent_2px,transparent_6px)] w-48 opacity-80" />
+                    <span className="text-[10px] text-zinc-400 font-mono tracking-widest mt-1">FD-{Date.now().toString().slice(-8)}</span>
+                  </div>
+                </div>
+
+                <div className="w-full flex gap-3 mt-2 no-print">
+                  <button
+                    onClick={() => window.print()}
+                    className="flex-1 py-3 bg-[#e51e25] hover:bg-[#c4161c] text-white rounded-xl font-bold text-xs shadow-md hover:scale-105 transition flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <Download className="w-4 h-4" /> Print Receipt
+                  </button>
+                  <button
+                    onClick={() => navigate("/food-order")}
+                    className="flex-1 py-3 bg-zinc-900 hover:bg-black text-white rounded-xl font-bold text-xs shadow-md hover:scale-105 transition flex items-center justify-center cursor-pointer"
+                  >
+                    Back to Menu
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
