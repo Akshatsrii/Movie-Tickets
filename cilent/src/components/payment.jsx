@@ -160,7 +160,7 @@ const Payment = () => {
         <ArrowLeft className="w-5 h-5" /> Cancel Payment
       </button>
 
-      <div className="w-full max-w-md bg-white border border-[#e51e25]/20 rounded-3xl shadow-2xl p-8 relative z-10">
+      <div className="w-full max-w-md bg-white border border-[#e51e25]/20 rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 relative z-10">
         
         {/* Stripe Header */}
         <div className="flex flex-col items-center text-center mb-6 border-b border-zinc-150 pb-4">

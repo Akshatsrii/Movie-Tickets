@@ -134,11 +134,22 @@ const AdminRouteWrapper = () => {
   return <Layout />;
 };
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin');
 
   return (
     <>
+      <ScrollToTop />
       <Toaster />
       {!isAdminRoute && <Navbar />}
 
