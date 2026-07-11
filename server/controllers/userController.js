@@ -103,3 +103,40 @@ export const makeAdmin = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 };
+
+// ✅ API Controller Function to Login as Admin using .env credentials
+export const adminLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const userId = req.auth?.userId || req.auth; // from Clerk middleware
+        
+        if (!userId) {
+            return res.json({ success: false, message: "Unauthorized. Please log in first." });
+        }
+
+        const envEmail = process.env.ADMIN_EMAIL;
+        const envPassword = process.env.ADMIN_PASSWORD;
+
+        if (!envEmail || !envPassword) {
+            return res.json({ success: false, message: "Admin credentials are not configured in server environment." });
+        }
+
+        if (email === envEmail && password === envPassword) {
+            // Update Clerk User privateMetadata to set role as "admin"
+            const user = await clerkClient.users.getUser(userId);
+            await clerkClient.users.updateUserMetadata(userId, {
+                privateMetadata: {
+                    ...user.privateMetadata,
+                    role: "admin"
+                }
+            });
+
+            res.json({ success: true, message: "Admin login successful! You are now authorized as Admin." });
+        } else {
+            res.json({ success: false, message: "Invalid Admin Email or Password." });
+        }
+    } catch (error) {
+        console.error("Admin login error:", error);
+        res.json({ success: false, message: error.message });
+    }
+};
