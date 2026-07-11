@@ -75,3 +75,31 @@ export const getFavorites = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 };
+
+// ✅ Helper API to make currently logged in user an Admin
+export const makeAdmin = async (req, res) => {
+    try {
+        const userId = req.auth().userId;
+        if (!userId) {
+            return res.json({ success: false, message: "Unauthorized. Please login first." });
+        }
+
+        const user = await clerkClient.users.getUser(userId);
+
+        await clerkClient.users.updateUserMetadata(userId, {
+            privateMetadata: {
+                ...user.privateMetadata,
+                role: "admin"
+            }
+        });
+
+        res.json({
+            success: true,
+            message: "Congratulations! You are now set as Admin. You can access the /admin panel now.",
+            role: "admin"
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.json({ success: false, message: error.message });
+    }
+};
