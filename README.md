@@ -22,6 +22,10 @@
     <a href="#-api-documentation">API Docs</a> •
     <a href="#-contributing">Contributing</a>
   </p>
+
+  <p>
+    <a href="https://movie-tickets-m-git-0c8104-akshat-srivastavas-projects-538225aa.vercel.app/"><strong>🔗 Live Demo</strong></a>
+  </p>
 </div>
 
 ---
