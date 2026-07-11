@@ -110,7 +110,10 @@ export const adminLogin = async (req, res) => {
         const { email, password } = req.body;
         const userId = req.auth?.userId || req.auth; // from Clerk middleware
         
+        console.log("📩 ADMIN LOGIN API HIT:", { email, userId });
+
         if (!userId) {
+            console.log("❌ Unauthorized attempt: no userId found");
             return res.json({ success: false, message: "Unauthorized. Please log in first." });
         }
 

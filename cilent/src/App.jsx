@@ -35,13 +35,19 @@ const AdminRouteWrapper = () => {
     e.preventDefault();
     setIsLoggingIn(true);
     const loadingToast = toast.loading("Verifying Admin credentials...");
+    console.log("🔑 [Client] starting admin login flow...");
 
     try {
+      console.log("🔑 [Client] fetching clerk token...");
       const token = await getToken();
+      console.log("🔑 [Client] clerk token received:", token ? "Token present" : "No token");
+
+      console.log("🔑 [Client] sending POST request to /api/user/admin-login...");
       const { data } = await axios.post("/api/user/admin-login", 
         { email, password },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log("🔑 [Client] response received:", data);
 
       if (data.success) {
         toast.success(data.message || "Admin access verified successfully!", { id: loadingToast });
@@ -51,7 +57,7 @@ const AdminRouteWrapper = () => {
         toast.error(data.message || "Invalid Admin Email or Password.", { id: loadingToast });
       }
     } catch (error) {
-      console.error(error);
+      console.error("🔑 [Client] error encountered during admin login:", error);
       toast.error("Authorization failed. Check server connection.", { id: loadingToast });
     } finally {
       setIsLoggingIn(false);
