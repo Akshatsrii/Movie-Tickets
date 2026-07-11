@@ -9,6 +9,7 @@ const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card"); // "card" or "cod"
 
   // Parse state details passed from checkout
   const bookingId = location.state?.bookingId || null;
@@ -142,7 +143,7 @@ const Payment = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen text-zinc-950 bg-[#fffaf9] overflow-hidden px-6">
+    <div className="relative flex flex-col items-center justify-center min-h-screen text-zinc-950 bg-[#fffaf9] overflow-hidden px-6 pt-32 pb-16">
       {/* Decorative Blur Circles */}
       <BlurCircle top="100px" left="100px" />
       <BlurCircle bottom="100px" right="100px" />
@@ -171,6 +172,26 @@ const Payment = () => {
           </div>
           <p className="text-zinc-400 text-xs font-semibold">Secure SSL Payment Terminal</p>
         </div>
+
+        {/* Payment Method Tabs */}
+        {!paymentSuccess && (
+          <div className="flex gap-2 mb-4 bg-zinc-100 p-1 rounded-2xl border border-zinc-200">
+            <button
+              type="button"
+              onClick={() => setPaymentMethod("card")}
+              className={`flex-1 py-2 text-xs font-bold rounded-xl transition ${paymentMethod === 'card' ? 'bg-[#e51e25] text-white shadow-sm' : 'text-zinc-500 hover:bg-zinc-200'}`}
+            >
+              💳 Card Payment
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentMethod("cod")}
+              className={`flex-1 py-2 text-xs font-bold rounded-xl transition ${paymentMethod === 'cod' ? 'bg-[#e51e25] text-white shadow-sm' : 'text-zinc-500 hover:bg-zinc-200'}`}
+            >
+              💵 Cash on Delivery
+            </button>
+          </div>
+        )}
 
         {!paymentSuccess ? (
           <div className="flex flex-col gap-5">
@@ -206,92 +227,103 @@ const Payment = () => {
             </div>
 
             <form onSubmit={handlePayment} className="flex flex-col gap-4">
-              <div>
-                <label className="block text-xs font-bold text-zinc-500 mb-2">
-                  Cardholder Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={cardholderName}
-                  onChange={(e) => setCardholderName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
-                  placeholder="John Doe"
-                />
-              </div>
+              {paymentMethod === "card" ? (
+                <>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-2">
+                      Cardholder Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={cardholderName}
+                      onChange={(e) => setCardholderName(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
+                      placeholder="John Doe"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-zinc-500 mb-2">
-                  Card Number
-                </label>
-                <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 focus-within:border-[#e51e25] rounded-xl px-3 shadow-sm relative">
-                  <CreditCard className="text-zinc-400 w-5 h-5 flex-shrink-0" />
-                  <input
-                    type="text"
-                    required
-                    maxLength="16"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    className="w-full py-2.5 bg-transparent text-zinc-950 focus:outline-none text-sm font-semibold pr-16"
-                    placeholder="4242 4242 4242 4242"
-                  />
-                  {cardBrand && (
-                    <span className={`absolute right-3 px-2 py-0.5 rounded text-[10px] font-black uppercase ${cardBrand.color}`}>
-                      {cardBrand.name}
-                    </span>
-                  )}
-                </div>
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-2">
+                      Card Number
+                    </label>
+                    <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 focus-within:border-[#e51e25] rounded-xl px-3 shadow-sm relative">
+                      <CreditCard className="text-zinc-400 w-5 h-5 flex-shrink-0" />
+                      <input
+                        type="text"
+                        required
+                        maxLength="16"
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
+                        className="w-full py-2.5 bg-transparent text-zinc-950 focus:outline-none text-sm font-semibold pr-16"
+                        placeholder="4242 4242 4242 4242"
+                      />
+                      {cardBrand && (
+                        <span className={`absolute right-3 px-2 py-0.5 rounded text-[10px] font-black uppercase ${cardBrand.color}`}>
+                          {cardBrand.name}
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div className="col-span-2">
-                  <label className="block text-xs font-bold text-zinc-500 mb-2">
-                    Expiry Date
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={expiry}
-                    onChange={(e) => setExpiry(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
-                    placeholder="MM/YY"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-zinc-500 mb-2">
-                    CVV / CVC
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    maxLength="3"
-                    value={cvv}
-                    onChange={(e) => setCvv(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
-                    placeholder="***"
-                  />
-                </div>
-              </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="col-span-2">
+                      <label className="block text-xs font-bold text-zinc-500 mb-2">
+                        Expiry Date
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={expiry}
+                        onChange={(e) => setExpiry(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
+                        placeholder="MM/YY"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-zinc-500 mb-2">
+                        CVV / CVC
+                      </label>
+                      <input
+                        type="password"
+                        required
+                        maxLength="3"
+                        value={cvv}
+                        onChange={(e) => setCvv(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
+                        placeholder="***"
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-zinc-500 mb-2">
-                  ZIP / Postal Code
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={zip}
-                  onChange={(e) => setZip(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
-                  placeholder="400001"
-                />
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-2">
+                      ZIP / Postal Code
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={zip}
+                      onChange={(e) => setZip(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl bg-zinc-50 text-zinc-950 border border-zinc-200 focus:border-[#e51e25] focus:outline-none text-sm font-semibold shadow-sm"
+                      placeholder="400001"
+                    />
+                  </div>
+                </>
+              ) : (
+                <div className="bg-zinc-50 border border-zinc-150 p-4 rounded-2xl text-center py-6">
+                  <p className="text-sm font-bold text-zinc-800 mb-1">Cash on Delivery / Counter Payment</p>
+                  <p className="text-xs text-zinc-500 leading-normal">
+                    You can pay the amount directly in cash or online at the counter/seat during delivery.
+                  </p>
+                </div>
+              )}
 
               <button
                 type="submit"
                 className="w-full py-3.5 bg-[#e51e25] hover:bg-[#c4161c] text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-all mt-4 shadow-[0_4px_14px_rgba(229,30,37,0.35)] cursor-pointer text-sm"
               >
-                Pay ₹{payableTotal} with Stripe
+                {paymentMethod === "card" ? `Pay ₹${payableTotal} with Stripe` : `Confirm Order (₹${payableTotal})`}
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-zinc-400 text-xs mt-2 border-t border-zinc-100 pt-4">

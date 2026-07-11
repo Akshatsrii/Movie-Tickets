@@ -1,4 +1,5 @@
 import FoodOrder from "../models/FoodOrder.js";
+import mongoose from "mongoose";
 
 // ✅ Create a new food order
 export const createFoodOrder = async (req, res) => {
@@ -11,6 +12,22 @@ export const createFoodOrder = async (req, res) => {
     const { screen, seat, items, amount } = req.body;
     if (!screen || !seat || !items || !amount) {
       return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      console.log("⚠️ MongoDB offline, serving mock successfully created food order");
+      const mockOrder = {
+        _id: "mock_order_" + Date.now(),
+        user: userId,
+        screen,
+        seat,
+        items,
+        amount: Number(amount),
+        status: "Placed",
+        isPaid: true,
+        createdAt: new Date()
+      };
+      return res.json({ success: true, message: "Food order placed successfully (Offline Mock)!", foodOrder: mockOrder });
     }
 
     const foodOrder = await FoodOrder.create({

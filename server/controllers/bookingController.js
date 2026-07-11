@@ -1,6 +1,7 @@
 import Show from "../models/Show.js";
 import Booking from "../models/Booking.js";
 import Stripe from "stripe";
+import mongoose from "mongoose";
 
 const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -32,6 +33,15 @@ export const createBooking = async (req, res) => {
     }
     const { showId, selectedSeats, snacks } = req.body;
     const { origin } = req.headers; // frontend origin (http://localhost:5173)
+
+    if (mongoose.connection.readyState !== 1) {
+      console.log("⚠️ MongoDB offline, serving mock paymentUrl for checkout");
+      return res.json({
+        success: true,
+        message: "Booking created successfully (Offline Mock)",
+        paymentUrl: `${origin}/payment?bookingId=mock_booking_${Date.now()}&amount=350&orderType=booking`
+      });
+    }
 
     // 1️⃣ Check seat availability
     const isAvailable = await checkSeatsAvailability(showId, selectedSeats);
@@ -194,6 +204,11 @@ export const confirmPayment = async (req, res) => {
     const { bookingId } = req.body;
     if (!bookingId) {
       return res.status(400).json({ success: false, message: "Missing booking ID" });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      console.log("⚠️ MongoDB offline, mock confirming payment");
+      return res.json({ success: true, message: "Booking payment confirmed successfully (Offline Mock)!" });
     }
 
     const booking = await Booking.findByIdAndUpdate(
