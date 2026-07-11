@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { assets } from "../assets/assets";
-import { Search, X, Menu, Ticket } from "lucide-react";
+import { Search, X, Menu, Ticket, Shield } from "lucide-react";
 import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
 import { useAppContext } from "../context/AppContext";
 
 const Navbar = () => {
-  const { favouriteMovies = [] } = useAppContext();
+  const { favouriteMovies = [], isAdmin } = useAppContext();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const location = useLocation();
@@ -83,6 +83,9 @@ const Navbar = () => {
             Favorites
           </Link>
         )}
+        <Link to="/admin" className="nav-link text-[#e51e25] hover:text-[#c4161c] font-bold flex items-center gap-1">
+          <Shield className="w-4 h-4" /> Admin Panel
+        </Link>
       </nav>
 
       {/* MOBILE MENU */}
@@ -116,6 +119,9 @@ const Navbar = () => {
             Favorites
           </Link>
         )}
+        <Link to="/admin" className="text-[#e51e25] hover:text-[#c4161c] font-bold flex items-center gap-1" onClick={() => setIsMenuOpen(false)}>
+          <Shield className="w-4 h-4" /> Admin Panel
+        </Link>
       </div>
 
       {/* RIGHT SECTION */}
@@ -130,6 +136,13 @@ const Navbar = () => {
                 href="/my-bookings"
                 labelIcon={<Ticket className="w-4 h-4" />}
               />
+              {isAdmin && (
+                <UserButton.Link
+                  label="Admin Panel"
+                  href="/admin"
+                  labelIcon={<Shield className="w-4 h-4" />}
+                />
+              )}
             </UserButton.MenuItems>
           </UserButton>
         ) : (
