@@ -1,5 +1,5 @@
 import Booking from "../models/Booking.js";
-import { clerkClient } from "@clerk/clerk-sdk-node";
+import { clerkClient } from "@clerk/express";
  
 
 // API Controller Function to Get User Bookings
